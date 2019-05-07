@@ -1,0 +1,12 @@
+<div class="bg-gradient-danger">
+  <div *ngIf="!isEmpty" class="alert alert-info" role="alert">
+    No Rejected Users Found!!
+  </div>
+  <table *ngIf="isEmpty" class="table table-borderless alert-danger">
+    <tbody>
+      <tr *ngFor="let user of users ; let i=index ">
+        <td>{{user.firstName}} {{user.lastName}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

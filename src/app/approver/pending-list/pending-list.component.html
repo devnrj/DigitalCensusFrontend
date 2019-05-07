@@ -1,0 +1,22 @@
+<div class="bg-gradient-success">
+  <div *ngIf="isEmpty" class="card w-50 h-100 mx-auto top alert-info">
+      <div class="card-body mx-auto">
+          No Pending Requests found!!
+      </div>
+  </div>
+  <div *ngIf="!isEmpty">
+    <div class="row">
+      <div [id]='i' class="card m-5 col-lg-3" *ngFor="let user of users ; let i=index " style="width: 18rem;">
+        <img src="http://localhost:53393/Image/{{user.profilePictureAddress}}" class="card-img-top" width="150px" height="150px">
+        <div class="card-body">
+          <h5 class="card-title">{{user.firstName}} {{user.lastName}}</h5>
+          <div class="row">
+            <button class="col-5 btn btn-success" (click)="approve(i)">Approve</button>
+            <div class="col-1"></div>
+            <button class="col-5 btn btn-danger" (click)="decline(i)">Reject</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
