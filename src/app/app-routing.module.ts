@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'house', component: AddHouseComponent, canActivate:[AuthGuard] },
   { path: 'citizen', component: AddCitizenComponent, canActivate:[AuthGuard] },
   { path: 'forebidden', component: ForebiddenComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'chart', pathMatch: 'full' },
   { path: '**', component : NotfoundComponent}
 ];
 

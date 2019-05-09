@@ -25,11 +25,14 @@ export class HouseService {
       }
 
     allStatePopulation(){
-        return this.http.get(`http://localhost:53393/api/population`);
+        return this.http.get(`http://localhost:53393/api/statePopulation`);
+    }
+    
+    allAgePopulation(){
+        return this.http.get(`http://localhost:53393/api/agePopulation`);
     }
 
     addCitizen(citizen:Citizen){
-        console.log(citizen);
         return this.http.post(`http://localhost:53393/api/citizen`,citizen,{headers: this.headers});
     }
     add(house: House) {

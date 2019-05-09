@@ -8,64 +8,104 @@
       <fieldset>
         <div class="form-group">
           <label for="citizen.PersonName">Full Name</label>
-          <input type="text" class="form-control" [(ngModel)]="citizen.PersonName" name="citizen.PersonName"
-            id="citizen.PersonName" placeholder="Enter Name">
+          <input type="text" class="form-control" [(ngModel)]="citizen.PersonName" required name="citizen.PersonName"
+            #pname="ngModel" [ngClass]="{ 'is-invalid': form.submitted && pname.invalid }" id="citizen.PersonName"
+            placeholder="Enter Name">
+          <div *ngIf="pname.invalid && (pname.dirty || pname.touched)" class="alert alert-danger">
+            <span *ngIf=" pname.errors?.required && pname.touched ">Person Name is required</span>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Census House No</label>
           <input type="text" class="form-control" [(ngModel)]="chn" name="chn" placeholder="Enter Census House No"
+            #chno="ngModel" [ngClass]="{ 'is-invalid': form.submitted && chno.invalid }" required
             (blur)="isValidCHN($event.target.value)">
-
+          <div *ngIf="chno.invalid && (chno.dirty || chno.touched)" class="alert alert-danger">
+            <div *ngIf=" chno.errors?.required && chno.touched ">Census House Number is required</div>
+          <div *ngIf=" !validChn && chno.touched ">Census House Number is not valid</div>
+        </div>
         </div>
 
-        <div class="form-group">
+        <div class=" form-group">
           <label>Relationship to Head</label>
-          <select class="form-control" [(ngModel)]="citizen.RelationWithHead" name="citizen.RelationWithHead">
+          <select class="form-control" [(ngModel)]="citizen.RelationWithHead" name="citizen.RelationWithHead"
+            #rel="ngModel" [ngClass]="{ 'is-invalid': form.submitted && rel.invalid }" required>
             <option *ngFor="let relation of Relation.values()" [value]="relation">{{relation}}</option>
           </select>
+          <div *ngIf="rel.invalid && (rel.dirty || rel.touched)" class="alert alert-danger">
+            <span *ngIf=" rel.errors?.required && rel.touched ">Relationship with head is required</span>
+          </div>
         </div>
 
-        <div class="form-group">
+        <div class=" form-group">
           <label>Gender</label>
-          <select class="form-control" [(ngModel)]="citizen.Gender" name="citizen.Gender">
+          <select class="form-control" [(ngModel)]="citizen.Gender" name="citizen.Gender" #gender="ngModel"
+            [ngClass]="{ 'is-invalid': form.submitted && gender.invalid }" required>
             <option *ngFor="let gender of Gender.values()" [value]="gender">{{gender}}</option>
           </select>
+          <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="alert alert-danger">
+            <span *ngIf=" gender.errors?.required && gender.touched ">Gender is required</span>
+          </div>
         </div>
 
-        <div class="form-group">
+        <div class=" form-group">
           <label>Date Of Birth</label>
           <input type="date" class="form-control" [(ngModel)]="citizen.DateOfBirth" name="citizen.DateOfBirth"
+            #dob="ngModel" [ngClass]="{ 'is-invalid': form.submitted && dob.invalid }" required
             placeholder="Enter DOB">
+          <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="alert alert-danger">
+            <span *ngIf=" dob.errors?.required && dob.touched ">Date Of Birth is required</span>
+          </div>
         </div>
 
-        <div class="form-group">
+        <div class=" form-group">
           <label>Marital Status</label>
-          <select class="form-control" [(ngModel)]="citizen.MaritalStatus" name="citizen.MaritalStatus">
+          <select class="form-control" [(ngModel)]="citizen.MaritalStatus" name="citizen.MaritalStatus"
+            #ms="ngModel" [ngClass]="{ 'is-invalid': form.submitted && ms.invalid }" required (blur)="pval($event.target.value)">
             <option *ngFor="let mstatus of MaritalStatus.values()" [value]="mstatus">{{mstatus}}</option>
           </select>
+          <div *ngIf="ms.invalid && (ms.dirty || ms.touched)" class="alert alert-danger">
+            <span *ngIf=" ms.errors?.required && ms.touched ">Marital Status is required</span>
+          </div>
         </div>
 
-        <div class="form-group">
+        <div [hidden]="MSTATUS" class="form-group">
           <label>Age at Marriage</label>
-          <input type="text" class="form-control" [(ngModel)]="citizen.MarriageAge" name="citizen.MarriageAge"
+          <input type="text" class="form-control" [(ngModel)]="citizen.MarriageAge"
+            name="citizen.MarriageAge" #age="ngModel"
+            [ngClass]="{ 'is-invalid': form.submitted && age.invalid }" required
             placeholder="Enter Marriage Age">
+          <div *ngIf="age.invalid && (age.dirty || age.touched)" class="alert alert-danger">
+            <span *ngIf=" age.errors?.required && age.touched ">Age at marriage is required</span>
         </div>
-        <div class="form-group">
-          <label>Occupation Status</label>
-          <select class="form-control" [(ngModel)]="citizen.Occupation" name="citizen.Occupation">
-            <option *ngFor="let occupation of Occupation.values()" [value]="occupation">{{occupation}}</option>
-          </select>
         </div>
-        <div class="form-group">
-          <label>Nature Of Industry</label>
-          <select class="form-control" [(ngModel)]="citizen.IndustryNature" name="citizen.IndustryNature">
-            <option *ngFor="let inature of IndustryNature.values()" [value]="inature">{{inature}}</option>
-          </select>
+        <div class=" form-group">
+              <label>Occupation Status</label>
+              <select class="form-control" [(ngModel)]="citizen.Occupation" name="citizen.Occupation"
+                #occ="ngModel" [ngClass]="{ 'is-invalid': form.submitted && occ.invalid }" required>
+                <option *ngFor="let occupation of Occupation.values()" [value]="occupation">
+                  {{occupation}}</option>
+              </select>
+              <div *ngIf="occ.invalid && (occ.dirty || occ.touched)" class="alert alert-danger">
+                <span *ngIf="occ.errors?.required && occ.touched">Occupation is required</span>
+              </div>
+          </div>
+          <div class="form-group">
+            <label>Nature Of Industry</label>
+            <select class="form-control" [(ngModel)]="citizen.IndustryNature"
+              name="citizen.IndustryNature" #ind="ngModel"
+              [ngClass]="{ 'is-invalid': form.submitted && ind.invalid }" required>
+              <option *ngFor="let inature of IndustryNature.values()" [value]="inature">{{inature}}
+              </option>
+            </select>
+            <div *ngIf="ind.invalid && (ind.dirty || ind.touched)" class="alert alert-danger">
+              <span *ngIf=" ind.errors?.required && ind.touched ">Industry Nature is required</span>
+            </div>
         </div>
-        <div>
-          <button [disabled]="!validChn" type="submit" class="btn btn-primary">Save</button>
-          <button (click)="reset(form)" class="btn btn-primary">Reset</button>
+        <div >
+          <button [disabled]=" form.invalid" type="submit" class="btn btn-primary col-3">Save</button>
+          <button (click)="reset(form)" class="btn btn-danger col-3 ml-1">Reset</button>
         </div>
       </fieldset>
     </form>

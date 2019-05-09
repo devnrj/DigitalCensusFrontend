@@ -12,6 +12,7 @@ export class AddCitizenComponent implements OnInit {
 
   citizen=new Citizen();
   validChn:boolean;
+  MSTATUS:boolean;
 
   Relation=Relation;
   Gender=Gender;
@@ -24,6 +25,13 @@ export class AddCitizenComponent implements OnInit {
 
   reset(form){
     form.reset();
+  }
+  pval(val){
+    if(val=="Single"){
+      this.MSTATUS=true;
+    }else{
+      this.MSTATUS=false;
+    }
   }
   ngOnInit() {
     if(localStorage.getItem('role') != null && localStorage.getItem('role')=='True' || localStorage.getItem('status')!='1'){

@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
                   
               },
               error => {
-                  console.log(error);
+                window.alert("Username or password not matched!");
                   
                   this.loading = false;
               });

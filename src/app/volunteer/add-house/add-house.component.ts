@@ -28,14 +28,19 @@ export class AddHouseComponent implements OnInit {
       this.router.navigate(['forebidden']);
     }
   }
-
+  reset(form){
+    form.reset();
+  }
   onSubmit(form){
     this.submitted=true;
     if(form.invalid){
       return
     }
     
-    this.houseService.add(this.house).subscribe(data=>this.censusHouseNumber=data.toString(),
+    this.houseService.add(this.house).subscribe(data=>{
+      this.censusHouseNumber=data.toString()
+      window.alert("Census House Number is : "+this.censusHouseNumber);
+    },
     error=>console.log(error));
   }
 

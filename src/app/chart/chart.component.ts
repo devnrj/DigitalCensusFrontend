@@ -9,9 +9,13 @@ import { Chart } from "chart.js";
 })
 export class ChartComponent implements OnInit {
 
-  barChart = [];
+  statePopulationChart = [];
+  agePopulationChart = [];
   lable = [];
   values = [];
+  ages=[];
+  ageCount=[];
+
   constructor(private houseService: HouseService) {
     this.houseService.allStatePopulation().subscribe
     (data => {
@@ -22,8 +26,18 @@ export class ChartComponent implements OnInit {
               },
     error => console.log(error)
     );
-              
-    
+
+    this.houseService.allAgePopulation().subscribe(
+      data=>{
+        this.ages=data[0];
+        this.ageCount=data[1];
+        this.ageChartRender();
+      },
+      error=>{
+        console.log(error);
+      }
+    );
+
     
   }
 
@@ -35,9 +49,43 @@ export class ChartComponent implements OnInit {
     return colors
   }
 
+  ageChartRender(){
+    
+    this.agePopulationChart = new Chart('agePopulationChart', {
+      type: 'bar',
+      data: {
+        labels: this.ages,
+        datasets: [{
+          data: this.ageCount,
+          backgroundColor: this.generateColors(),
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'AgeWise Population'
+        },
+        scales: {
+          yAxes: [{
+            display: true,
+            ticks: {
+              beginAtZero: true,
+              steps: 50,
+              stepValue: 3,
+              max: 20
+            }
+          }]
+        },
+      }
+    });
+  }
   chartRender() {
 
-    this.barChart = new Chart('barChart', {
+    this.statePopulationChart = new Chart('statePopulationChart', {
       type: 'bar',
       data: {
         labels: this.lable,

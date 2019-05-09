@@ -1,4 +1,4 @@
-<div class="card bg-light mb-3" [hidden]="submitted">
+<div class="card bg-light mb-3">
   <div class="card-header">
     <h1>House Details</h1>
   </div>
@@ -9,93 +9,102 @@
         <div class="form-group">
           <label for="house.apartmentNumber">Apartment No</label>
           <div>
-            <input type="text" [(ngModel)]="house.apartmentNumber" required class="form-control" id="apartmentNumber"
-              name="apartmentNumber" placeholder="Enter Apartment Number">
+            <input type="text" [(ngModel)]="house.apartmentNumber" #aptNo="ngModel"
+              [ngClass]="{ 'is-invalid': form.submitted && aptNo.invalid }" required class="form-control"
+              id="apartmentNumber" name="apartmentNumber" placeholder="Enter Apartment Number">
+            <div *ngIf="aptNo.invalid && (aptNo.dirty || aptNo.touched)" class="alert alert-danger">
+              <span *ngIf=" aptNo.errors?.required && aptNo.touched ">Apartment Number is required</span>
+            </div>
           </div>
+
         </div>
         <div class="form-group">
           <label for="house.streetName">Street Name</label>
           <div>
             <input type="text" [(ngModel)]="house.streetName" required class="form-control" id="stname" name="stname"
+              #stname="ngModel" [ngClass]="{ 'is-invalid': form.submitted && stname.invalid }"
               placeholder="Enter Street Name">
+            <div *ngIf="stname.invalid && (stname.dirty || stname.touched)" class="alert alert-danger">
+              <span *ngIf="stname.errors?.required && stname.touched ">Street Name is required</span>
+            </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class=" form-group">
           <label for="house.city">City</label>
           <div>
             <input type="text" [(ngModel)]="house.city" required class="form-control" id="city" name="city"
+              #city="ngModel" [ngClass]="{ 'is-invalid': form.submitted && city.invalid }"
               placeholder="Enter City Name">
+            <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
+              <span *ngIf=" city.errors?.required && city.touched ">City is required</span>
+          </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="house.state">State</label>
-          <select [(ngModel)]="house.state" required class="form-control" id="state" name="state"
-            placeholder="Select State Name">
-            <option *ngFor="let state of states; let index = i" [value]="state">{{state}}</option>
-          </select>
+        <div class=" form-group">
+                <label for="house.state">State</label>
+                <select [(ngModel)]="house.state" required class="form-control" id="state" name="state"
+                  #statename="ngModel" [ngClass]="{ 'is-invalid': form.submitted && statename.invalid }"
+                  placeholder="Select State Name">
+                  <option *ngFor="let state of states; let index = i" [value]="state">{{state}}</option>
+                </select>
+                <div *ngIf="statename.invalid && (statename.dirty || statename.touched)" class="alert alert-danger">
+                  <span *ngIf=" statename.errors?.required && statename.touched ">State is required</span>
+                </div>
         </div>
-        <div class="form-group">
-          <label for="hhname">House Head Person Name</label>
-          <div>
-            <input type="text" [(ngModel)]="house.houseHeadPerson" required class="form-control" name="hhname" id="hhname"
-              placeholder="Enter Name Of House Head Person">
+        <div class=" form-group">
+                    <label for="hhname">House Head Person Name</label>
+                    <div>
+                      <input type="text" [(ngModel)]="house.houseHeadPerson" required class="form-control" name="hhname"
+                        #hhname="ngModel" [ngClass]="{ 'is-invalid': form.submitted && hhname.invalid }" id="hhname"
+                        placeholder="Enter Name Of House Head Person">
+                      <div *ngIf="hhname.invalid && (hhname.dirty || hhname.touched)" class="alert alert-danger">
+                        <span *ngIf="hhname.errors?.required && hhname.touched ">House Head Name is required</span>
+                    </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="house.ownership">House Ownership Status</label>
-          <div>
-            <select [(ngModel)]="house.ownership" required class="form-control" id="ownstatus" name="ownstatus"
-              placeholder="Select Ownership Status">
-              <option value="owned">Owned</option>
-              <option value="rented">Rented</option>
-            </select>
-          </div>
+        <div class=" form-group">
+                          <label for="house.ownership">House Ownership Status</label>
+                          <div>
+                            <select [(ngModel)]="house.ownership" required class="form-control" id="ownstatus"
+                              name="ownstatus" #ownership="ngModel"
+                              [ngClass]="{ 'is-invalid': form.submitted && ownership.invalid }"
+                              placeholder="Select Ownership Status">
+                              <option value="owned">Owned</option>
+                              <option value="rented">Rented</option>
+                            </select>
+                            <div *ngIf="ownership.invalid && (ownership.dirty || ownership.touched)"
+                              class="alert alert-danger">
+                              <span *ngIf=" ownership.errors?.required && ownership.touched ">House Ownership Status is required</span>
+                        </div>
+                        </div>
         </div>
-        <div class="form-group">
-          <label for="house.roomQuantity">Number Of Rooms</label>
-          <div>
-            <select [(ngModel)]="house.roomQuantity" required class="form-control" id="rooms" name="rooms"
-              placeholder="Select Number Of Rooms">
-              <option value="1">1 Room</option>
-              <option value="2">2 Rooms</option>
-              <option value="3">3 Rooms</option>
-              <option value="4">4 Rooms</option>
-              <option value="5">5 Rooms</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <button [disabled]="form.invalid" type="submit" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-block">Save</button>
-        </div>
+        <div class=" form-group">
+                                <label for="house.roomQuantity">Number Of Rooms</label>
+                                <div>
+                                  <select [(ngModel)]="house.roomQuantity" required class="form-control" id="rooms"
+                                    name="rooms" #roomqty="ngModel"
+                                    [ngClass]="{ 'is-invalid': form.submitted && roomqty.invalid }"
+                                    placeholder="Select Number Of Rooms">
+                                    <option value="1">1 Room</option>
+                                    <option value="2">2 Rooms</option>
+                                    <option value="3">3 Rooms</option>
+                                    <option value="4">4 Rooms</option>
+                                    <option value="5">5 Rooms</option>
+                                  </select>
+                                  <div *ngIf="roomqty.invalid && (roomqty.dirty || roomqty.touched)"
+                                    class="alert alert-danger">
+                                    <span *ngIf=" roomqty.errors?.required && roomqty.touched ">Room Quantity is
+                                      required</span>
+                                  </div>
+                                </div>
+                            </div>
+                            <div>
+                              <button [disabled]=" form.invalid" type="submit"
+                                class="btn btn-primary col-3">Save</button>
+                              <button (click)="reset(form)" class="btn btn-danger col-3 ml-1">Reset</button>
+                            </div>
       </fieldset>
     </form>
   </div>
 
-</div>
-<div [hidden]="!submitted">
-  <div class="alert alert-primary alert-dismissible fade show" role="alert">
-    Census House Number : <strong>{{censusHouseNumber}}</strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="submitted=false">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
 </div>
